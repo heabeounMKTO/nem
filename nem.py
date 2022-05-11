@@ -4,7 +4,7 @@ from pathlib import Path
 from os.path import join
 import subprocess
 
-
+print("welcome to nem, lazy tool for lazy people by lazy people")
 currentDir = input("WHERE IS THE TEXTURE (path pls)\n")
 subfoldersList = os.listdir(currentDir)
 autoMatPath = os.path.join(os.getcwd() + "\matauto.py")
