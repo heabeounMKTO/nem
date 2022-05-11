@@ -5,8 +5,9 @@ from os.path import join
 import subprocess
 
 
-currentDir = os.getcwd()
+currentDir = input("WHERE IS THE TEXTURE (path pls)\n")
 subfoldersList = os.listdir(currentDir)
+autoMatPath = os.path.join(os.getcwd() + "\matauto.py")
 
 def createBlendInSubfolders():
     
@@ -27,7 +28,7 @@ def createMaterialInBlend():
         blendName = blendPath.stem + '.blend'
         blendFilePath = os.path.join(blendPath,blendName)
         print("opening file: " + blendName)
-        launchBlender = subprocess.run(["blender","--enable-autoexec",blendFilePath, '--python', "D:\matlib\matauto.py"])
+        launchBlender = subprocess.run(["blender","--enable-autoexec",blendFilePath, '--python', autoMatPath])
         #DEVNULL HIDES BLENDER CONSOLE OUTPUT
         print('file rewritten: ' + blendFilePath)
         print('material created: ' + blendName)
