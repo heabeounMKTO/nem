@@ -22,7 +22,8 @@ print("""\
                           '                            
 
 """)
-print("      THE BLENDER TOOLKIT FOR LAZY PEOPLE BY LAZY PEOPLE          ")
+print(" THE BLENDER TOOLKIT FOR LAZY PEOPLE BY LAZY PEOPLE ")
+print(" this program is provided as is there are no guaratees ")
 
 
 currentDir = input("enter texture directory that contains all the subfolders with textures\n")
