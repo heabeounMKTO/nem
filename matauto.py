@@ -4,9 +4,26 @@ import glob
 from os.path import join
 import time 
 from bpy.app.handlers import persistent
+import numpy as np
+import functools
 
+
+
+
+
+def clearScene():
     
-    
+    bpy.ops.object.select_all(action = "SELECT")
+    bpy.ops.object.delete()  
+
+def renderThumb():
+    bpy.data.objects['Sphere'].select_set(True)
+    for area in bpy.context.screen.areas:
+        if area.type == "PROPERTIES":
+            bpy.context.space_data.context = 'MATERIAL'
+
+
+
 def pbrMaterial(id):
     mat = bpy.data.materials.get(id)
     
@@ -57,17 +74,17 @@ def createPrincipledShader(id, type):
         texCoords.location = (-2000, 0)
         #add maps from relative path to created nodes
         #         
-        addMapsFromRelativePath(diffuse, "diff")
+        addMapsFromRelativePath(diffuse, "diff", "sRGB")
         if(diffuse.image == None):
-            addMapsFromRelativePath(diffuse, "col")
-        addMapsFromRelativePath(normal, "nor")
+            addMapsFromRelativePath(diffuse, "col", "sRGB")
+        addMapsFromRelativePath(normal, "nor", "Non-Color")
         if(normal.image == None):
-            addMapsFromRelativePath(normal, "nrm")
-        addMapsFromRelativePath(roughness, "rough")
-        addMapsFromRelativePath(disp, "disp")
-        addMapsFromRelativePath(metallic,"metal")
+            addMapsFromRelativePath(normal, "nrm", "Non-Color")
+        addMapsFromRelativePath(roughness, "rough", "Non-Color")
+        addMapsFromRelativePath(disp, "disp", "Non-Color")
+        addMapsFromRelativePath(metallic,"metal", "Non-Color")
         if(metallic.image == None):
-            addMapsFromRelativePath(metallic, "met")    
+            addMapsFromRelativePath(metallic, "met", "Non-Color")    
        
         
         
@@ -95,16 +112,21 @@ def createPrincipledShader(id, type):
 def drawPbrSphere():
     # idx = bpy.context.window_manager.windows[:].index(bpy.context.window)
     # window = bpy.context.window_manager.windows[idx]
-    # screen = window.screen
+    # screen = window.screena
     # for a in screen.areas:
     #     if(a.type == 'VIEW_3D'):
     #         print("area is view3d")
     blendname = bpy.path.basename(bpy.context.blend_data.filepath)
+       
     mat = createPrincipledShader(blendname, "Principled")
-    bpy.data.materials[blendname].asset_mark()
+    
+    
     bpy.ops.mesh.primitive_uv_sphere_add(segments=32, radius = 0.5, location=(0,0,0))
     bpy.ops.object.shade_smooth()
     bpy.context.active_object.data.materials.append(mat)
+    # time.sleep(3)
+    
+    # bpy.data.materials[blendname].asset_mark()
     print("pbrSphereDrawn.")                
 #find files 
 def find_files(substring, path='.', extensions=[]):
@@ -120,11 +142,11 @@ def image_files(substring, path="."):
 
 #nodeName is the name given to nodes created in createPrincipledShader()
 #mapName is the name of the image files to search in the relative path
-def addMapsFromRelativePath(nodeName ,mapName):
+def addMapsFromRelativePath(nodeName ,mapName, colorSpace):
     relPath = bpy.path.abspath("//")
     for fp in image_files(mapName, path=relPath):
         nodeName.image = bpy.data.images.load(join(relPath, fp))
-
+        nodeName.image.colorspace_settings.name = colorSpace
 def saveAndQuit():
     bpy.ops.wm.save_mainfile()
     bpy.ops.wm.quit_blender()        
@@ -138,11 +160,40 @@ def get_context():
     views_3d = sorted(
             [a for a in screen.areas if a.type == 'VIEW_3D'],
             key=lambda a: (a.width * a.height))
+def markAsset():
+    blendname = bpy.path.basename(bpy.context.blend_data.filepath)
+    bpy.data.materials[blendname].asset_mark()
+    bpy.data.materials[blendname].asset_generate_preview()
+
+def verifyAssetPreview():
+    assetMat = [a for a in bpy.data.materials if a.asset_data]
+    while assetMat:
+        preview = assetMat[0].preview
+        if preview is None:
+            assetMat[0].asset_generate_preview()
+            return 0.2
+            print("preview generated for asset")
+        arr = np.zeros((preview.image_size[0] * preview.image_size[1]) * 4, dtype=np.float32)
+        preview.image_pixels_float.foreach_get(arr)
+        if np.all((arr == 0)):            
+            assetMat[0].asset_generate_preview()
+            return 0.2
+        else:
+            assetMat.pop(0)
+
+    return None
+    
+    
 
 
+##clearScene()
 
 drawPbrSphere()
-saveAndQuit()
+
+markAsset()
+
+
+bpy.app.timers.register(saveAndQuit, first_interval = 8)
        
             
         
