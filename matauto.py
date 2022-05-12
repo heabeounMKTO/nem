@@ -72,6 +72,8 @@ def createPrincipledShader(id, type):
         mappingNode.location = (-1600, 0)
         texCoords =nodes.new(type = 'ShaderNodeTexCoord')
         texCoords.location = (-2000, 0)
+
+        # alphaCh = nodes.new(type = 'ShaderNodeTexImage')
         #add maps from relative path to created nodes
         #         
         addMapsFromRelativePath(diffuse, "diff", "sRGB")
@@ -85,7 +87,9 @@ def createPrincipledShader(id, type):
         addMapsFromRelativePath(metallic,"metal", "Non-Color")
         if(metallic.image == None):
             addMapsFromRelativePath(metallic, "met", "Non-Color")    
-       
+        # addMapsFromRelativePath(alphaCh,"opacity", 'Non-Color')
+        # if(alphaCh.image == None):
+        #     addMapsFromRelativePath(alphaCh, "alpha","Non-Color")
         
         
         
@@ -97,7 +101,7 @@ def createPrincipledShader(id, type):
     links.new(roughness.outputs[0], shader.inputs["Roughness"])
     links.new(disp.outputs[0], output.inputs["Displacement"])
     links.new(texCoords.outputs[2], mappingNode.inputs["Vector"])
-
+    # links.new(alphaCh.outputs[0]), shader.inputs['Alpha'])
     #tex coords and mapping linking 
     links.new(mappingNode.outputs[0], diffuse.inputs[0])
     links.new(mappingNode.outputs[0], roughness.inputs[0])
@@ -118,7 +122,7 @@ def drawPbrSphere():
     #         print("area is view3d")
     blendname = bpy.path.basename(bpy.context.blend_data.filepath)
        
-    mat = createPrincipledShader(blendname, "Principled")
+    mat = createPrincipledShader(blendname.removesuffix(".blend"), "Principled")
     
     
     bpy.ops.mesh.primitive_uv_sphere_add(segments=32, radius = 0.5, location=(0,0,0))
@@ -162,8 +166,8 @@ def get_context():
             key=lambda a: (a.width * a.height))
 def markAsset():
     blendname = bpy.path.basename(bpy.context.blend_data.filepath)
-    bpy.data.materials[blendname].asset_mark()
-    bpy.data.materials[blendname].asset_generate_preview()
+    bpy.data.materials[blendname.removesuffix(".blend")].asset_mark()
+    bpy.data.materials[blendname.removesuffix(".blend")].asset_generate_preview()
 
 def verifyAssetPreview():
     assetMat = [a for a in bpy.data.materials if a.asset_data]
@@ -193,7 +197,7 @@ drawPbrSphere()
 markAsset()
 
 
-bpy.app.timers.register(saveAndQuit, first_interval = 8)
+bpy.app.timers.register(saveAndQuit, first_interval = 15)
        
             
         

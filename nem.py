@@ -5,30 +5,24 @@ from os.path import join
 import subprocess
 
 print("""\
-          _____                    _____                    _____          
-         /\    \                  /\    \                  /\    \         
-        /::\____\                /::\    \                /::\____\        
-       /::::|   |               /::::\    \              /::::|   |        
-      /:::::|   |              /::::::\    \            /:::::|   |        
-     /::::::|   |             /:::/\:::\    \          /::::::|   |        
-    /:::/|::|   |            /:::/__\:::\    \        /:::/|::|   |        
-   /:::/ |::|   |           /::::\   \:::\    \      /:::/ |::|   |        
-  /:::/  |::|   | _____    /::::::\   \:::\    \    /:::/  |::|___|______  
- /:::/   |::|   |/\    \  /:::/\:::\   \:::\    \  /:::/   |::::::::\    \ 
-/:: /    |::|   /::\____\/:::/__\:::\   \:::\____\/:::/    |:::::::::\____\
-\::/    /|::|  /:::/    /\:::\   \:::\   \::/    /\::/    / ~~~~~/:::/    /
- \/____/ |::| /:::/    /  \:::\   \:::\   \/____/  \/____/      /:::/    / 
-         |::|/:::/    /    \:::\   \:::\    \                  /:::/    /  
-         |::::::/    /      \:::\   \:::\____\                /:::/    /   
-         |:::::/    /        \:::\   \::/    /               /:::/    /    
-         |::::/    /          \:::\   \/____/               /:::/    /     
-         /:::/    /            \:::\    \                  /:::/    /      
-        /:::/    /              \:::\____\                /:::/    /       
-        \::/    /                \::/    /                \::/    /        
-         \/____/                  \/____/                  \/____/         
-                                                                           
+ 
+                                                       
+ _____   ______        ______        ______  _______   
+|\    \ |\     \   ___|\     \      |      \/       \  
+ \\    \| \     \ |     \     \    /          /\     \ 
+  \|    \  \     ||     ,_____/|  /     /\   / /\     |
+   |     \  |    ||     \--'\_|/ /     /\ \_/ / /    /|
+   |      \ |    ||     /___/|  |     |  \|_|/ /    / |
+   |    |\ \|    ||     \____|\ |     |       |    |  |
+   |____||\_____/||____ '     /||\____\       |____|  /
+   |    |/ \|   |||    /_____/ || |    |      |    | / 
+   |____|   |___|/|____|     | / \|____|      |____|/  
+     \(       )/    \( |_____|/     \(          )/     
+      '       '      '    )/         '          '      
+                          '                            
+
 """)
-print("       THE BLENDER TOOLKIT FOR LAZY PEOPLE BY LAZY PEOPLE          ")
+print("      THE BLENDER TOOLKIT FOR LAZY PEOPLE BY LAZY PEOPLE          ")
 
 
 currentDir = input("enter your command\n")
@@ -42,8 +36,11 @@ def createBlendInSubfolders():
         texPath = Path(currentDir) / Path(subFolders)
             
         texName = texPath.stem + ".blend"
-            
-        createBlendFile = open(os.path.join(texPath,texName), 'w')
+        
+        if(os.path.join(texPath,texName) == None):    
+            createBlendFile = open(os.path.join(texPath,texName), 'w')
+        else:
+            return None
         print('created blend file: ' + createBlendFile.name)
 
 def createMaterialInBlend():
