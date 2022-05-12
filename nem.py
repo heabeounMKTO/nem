@@ -25,7 +25,7 @@ print("""\
 print("      THE BLENDER TOOLKIT FOR LAZY PEOPLE BY LAZY PEOPLE          ")
 
 
-currentDir = input("enter your command\n")
+currentDir = input("enter texture directory that contains all the subfolders with textures\n")
 subfoldersList = os.listdir(currentDir)
 autoMatPath = os.path.join(os.getcwd() + "\matauto.py")   
 
