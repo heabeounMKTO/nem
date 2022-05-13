@@ -156,36 +156,37 @@ def saveAndQuit():
     bpy.ops.wm.quit_blender()        
 
 
-def get_context():
-    # create a context that works when blender is executed from the command line.
-    idx = bpy.context.window_manager.windows[:].index(bpy.context.window)
-    window = bpy.context.window_manager.windows[idx]
-    screen = window.screen
-    views_3d = sorted(
-            [a for a in screen.areas if a.type == 'VIEW_3D'],
-            key=lambda a: (a.width * a.height))
+# def get_context():
+#     # create a context that works when blender is executed from the command line.
+#     idx = bpy.context.window_manager.windows[:].index(bpy.context.window)
+#     window = bpy.context.window_manager.windows[idx]
+#     screen = window.screen
+#     views_3d = sorted(
+#             [a for a in screen.areas if a.type == 'VIEW_3D'],
+#             key=lambda a: (a.width * a.height))
 def markAsset():
     blendname = bpy.path.basename(bpy.context.blend_data.filepath)
     bpy.data.materials[blendname.removesuffix(".blend")].asset_mark()
     bpy.data.materials[blendname.removesuffix(".blend")].asset_generate_preview()
+    
+# def verifyAssetPreview():
+#     assetMat = [a for a in bpy.data.materials if a.asset_data]
+#     while assetMat:
+#         preview = assetMat[0].preview
+#         if preview is None:
+#             assetMat[0].asset_generate_preview()
+#             return 0.2
+#             print("preview generated for asset")
+#         arr = np.zeros((preview.image_size[0] * preview.image_size[1]) * 4, dtype=np.float32)
+#         preview.image_pixels_float.foreach_get(arr)
+#         if np.all((arr == 0)):            
+#             assetMat[0].asset_generate_preview()
+#             return 0.2
+#         else:
+#             assetMat.pop(0)
 
-def verifyAssetPreview():
-    assetMat = [a for a in bpy.data.materials if a.asset_data]
-    while assetMat:
-        preview = assetMat[0].preview
-        if preview is None:
-            assetMat[0].asset_generate_preview()
-            return 0.2
-            print("preview generated for asset")
-        arr = np.zeros((preview.image_size[0] * preview.image_size[1]) * 4, dtype=np.float32)
-        preview.image_pixels_float.foreach_get(arr)
-        if np.all((arr == 0)):            
-            assetMat[0].asset_generate_preview()
-            return 0.2
-        else:
-            assetMat.pop(0)
+#     return None
 
-    return None
     
     
 
