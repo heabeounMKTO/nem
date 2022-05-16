@@ -152,6 +152,7 @@ def addMapsFromRelativePath(nodeName ,mapName, colorSpace):
         nodeName.image = bpy.data.images.load(join(relPath, fp))
         nodeName.image.colorspace_settings.name = colorSpace
 def saveAndQuit():
+   
     bpy.ops.wm.save_mainfile()
     bpy.ops.wm.quit_blender()        
 
@@ -168,6 +169,7 @@ def markAsset():
     blendname = bpy.path.basename(bpy.context.blend_data.filepath)
     bpy.data.materials[blendname.removesuffix(".blend")].asset_mark()
     bpy.data.materials[blendname.removesuffix(".blend")].asset_generate_preview()
+    bpy.data.materials[blendname.removesuffix(".blend")].preview_ensure()
     
 # def verifyAssetPreview():
 #     assetMat = [a for a in bpy.data.materials if a.asset_data]
@@ -197,10 +199,8 @@ drawPbrSphere()
 
 markAsset()
 
-
 bpy.app.timers.register(saveAndQuit, first_interval = 15)
-       
-            
+                
         
               
         
