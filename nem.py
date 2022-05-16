@@ -33,13 +33,16 @@ mainTextureFolder = input("enter texture directory that contains all the subfold
 autoMatPath = os.path.join(os.getcwd() + "\matauto.py")   
 texFolders = list()
 
-def createBlendInSubfolders():
-        
+def findAllTextureFolders():
     for root,dirs,files in os.walk(mainTextureFolder):
             
         if not dirs:
             texFolders.append(root)
-    print(texFolders)
+    return texFolders
+
+def createBlendInSubfolders():
+        
+    findAllTextureFolders()
     for blendPath in texFolders:    
         blendPath = Path(blendPath)
         blendName = blendPath.stem + ".blend"
@@ -57,21 +60,20 @@ def createBlendInSubfolders():
     
 
     
-# def createMaterialInBlend():
-#     for blendFiles in mainTexTureFolder:
-            
-#         blendPath = Path(currentDir) / Path(blendFiles)
-            
-#         blendName = blendPath.stem + '.blend'
-#         blendFilePath = os.path.join(blendPath,blendName)
-#         print("opening file: " + blendName)
-#         launchBlender = subprocess.run(["blender","--enable-autoexec",blendFilePath, '--python', autoMatPath])
-#         #DEVNULL HIDES BLENDER CONSOLE OUTPUT
-#         print('file rewritten: ' + blendFilePath)
-#         print('material created: ' + blendName)
+def createMaterialInBlend():
+    findAllTextureFolders()
+    for blendFiles in texFolders:
+        blendFiles = Path(blendFiles)
+        blendName = blendFiles.stem + ".blend"
+        fullBlendPath = os.path.join(blendFiles, blendName)
         
+        print("opening file: " + blendName)
+        launchBlender = subprocess.run(["blender","--enable-autoexec",fullBlendPath, '--python', autoMatPath])
+        print("material created:" + blendFiles.stem)            
+
 createBlendInSubfolders()
-    
+createMaterialInBlend()
+print("all conversions done!")    
     
 
 
