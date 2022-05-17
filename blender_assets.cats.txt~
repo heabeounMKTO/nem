@@ -1,0 +1,14 @@
+# This is an Asset Catalog Definition file for Blender.
+#
+# Empty lines and lines starting with `#` will be ignored.
+# The first non-ignored line should be the version indicator.
+# Other lines are of the format "UUID:catalog/path/for/assets:simple catalog name"
+
+VERSION 1
+
+66e3a829-b8ee-4819-8080-60642ae3df64:Mat:Mat
+0ec1e11e-f931-4a37-870c-d7a0e36db187:Mat/Bronze:Mat-Bronze
+2f5ffd03-b881-43ab-a2a0-d5b3f44b6a5b:Mat/Fabric:Mat-Fabric
+aa743e42-1947-402c-9dc1-0fc77bf2a07c:mat:mat
+c8338e7e-369a-43aa-a950-f3d1c0f6f931:mat/brnze:mat-brnze
+24c20739-a479-497e-87a7-6cd79d26b871:mat/fab:mat-fab

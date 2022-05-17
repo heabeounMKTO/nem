@@ -1,0 +1,18 @@
+# This is an Asset Catalog Definition file for Blender.
+#
+# Empty lines and lines starting with `#` will be ignored.
+# The first non-ignored line should be the version indicator.
+# Other lines are of the format "UUID:catalog/path/for/assets:simple catalog name"
+
+VERSION 1
+
+deac19f5-2d6a-437c-a25a-4abbde5b9083:Material:Material
+c86060b1-abe1-4882-86fd-6b05b906fea4:Material/Flooring:Material-Flooring
+057fc755-8af7-42fc-9cea-1001394d9861:Material/Flooring/Wood flooring:Material-Flooring-Wood flooring
+34c12929-fd76-4247-bfb3-5342e150ab27:Material/Metal:Material-Metal
+babbad44-a507-4ce8-97eb-98ca07a9861e:Material/Metal/Bronze:Material-Metal-Bronze
+94b815be-04f9-4614-ac44-d67db63e5ce8:Material/Metal/Chrome:Material-Metal-Chrome
+aee7e956-2bb6-409d-9fb2-f31db0ccd26f:Material/Metal/Painted:Material-Metal-Painted
+1b5f214c-ae62-46be-aba8-25848047ce1e:Material/Upholstery:Material-Upholstery
+9892c468-bdec-4aaa-8fb4-58e3502e4886:Material/Upholstery/Fabric:Material-Upholstery-Fabric
+a2108796-6917-465b-9082-67f2fee6396b:Material/Upholstery/Leather:Material-Upholstery-Leather

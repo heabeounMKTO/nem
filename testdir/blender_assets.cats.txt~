@@ -6,7 +6,11 @@
 
 VERSION 1
 
-88a09645-b1df-4a1b-a915-5f3ef4defdd5:Material:Material
-06b9af38-1348-4e45-8157-305fb873200c:Material/Catalog:Material-Catalog
-cc2c0394-85e1-408b-98e1-ed2b941d7535:Material/Catalog.001:Material-Catalog.001
-d51b0620-a3b2-4314-ad99-7834084e52a5:Material/Catalog.002:Material-Catalog.002
+41970529-ecf6-4bb9-884d-6e88cbacfdd7:Material:Material
+5f51489a-60d7-461c-bdaf-563115b2e4a5:Material/Bronze:Bronze
+eeff1920-89a7-4f9f-bfb4-1a1e3bba1db6:Material/Bronze:Bronze
+57069566-9c07-4ae6-bc17-2dda1338f9f9:Material/Fabric:Fabric
+be9be539-b85c-42f0-a57b-576875ba525d:Material/Fabric:Fabric
+e6dd810c-e194-47ac-9f73-b6297dcfb826:Material/Fabric:Fabric
+
+1054f3b5-23cc-45ae-bf87-4b11522f5fdd:Material/Bronze:Bronze
