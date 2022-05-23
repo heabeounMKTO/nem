@@ -128,7 +128,12 @@ def createPrincipledShader(id, type):
       
      
 def drawPbrSphere():
-   
+   # idx = bpy.context.window_manager.windows[:].index(bpy.context.window)
+   # window = bpy.context.window_manager.windows[idx]
+   # screen = window.screena
+   # for a in screen.areas:
+   #     if(a.type == 'VIEW_3D'):
+   #         print("area is view3d")
    blendname = bpy.path.basename(bpy.context.blend_data.filepath)
       
    mat = createPrincipledShader(blendname.removesuffix(".blend"), "Principled")
@@ -166,7 +171,14 @@ def saveAndQuit():
    bpy.ops.wm.quit_blender()        
 
 
-
+# def get_context():
+#     # create a context that works when blender is executed from the command line.
+#     idx = bpy.context.window_manager.windows[:].index(bpy.context.window)
+#     window = bpy.context.window_manager.windows[idx]
+#     screen = window.screen
+#     views_3d = sorted(
+#             [a for a in screen.areas if a.type == 'VIEW_3D'],
+#             key=lambda a: (a.width * a.height))
 def markAsset():
    
    target_catalog = catalogName
@@ -177,21 +189,41 @@ def markAsset():
    
    asset = bpy.data.materials[blendname.removesuffix(".blend")].asset_data
    asset.catalog_id = createUUID    
+## def verifyAssetPreview():
+##     assetMat = [a for a in bpy.data.materials if a.asset_data]
+##     while assetMat:
+##         preview = assetMat[0].preview
+##         if preview is None:
+##             assetMat[0].asset_generate_preview()
+##             return 0.2
+##             print("preview generated for asset")
+##         arr = np.zeros((preview.image_size[0] * preview.image_size[1]) * 4, dtype=np.float32)
+##         preview.image_pixels_float.foreach_get(arr)
+##         if np.all((arr == 0)):            
+##             assetMat[0].asset_generate_preview()
+##             return 0.2
+##         else:
+##             assetMat.pop(0)
 
+##     return None
+#    
+#    
+#    
 def createCatalongName():
     
+    readRootDir = open(os.path.join(directoryPath, "rootDir.txt"), 'r')
+    rootDir = readRootDir.readlines()[0]
     
+    ba_catalogFile = os.path.join(rootDir,"blender_assets.cats.txt")
     
-    
-    ba_catalogFile = os.path.join(assetDir,"blender_assets.cats.txt")
-    
-
-    
+    splitCatalogPath = os.path.relpath(directoryPath, rootDir)
+    getFolderName = os.path.split(splitCatalogPath)
+    textureCategeoryName = getFolderName[0].replace(os.sep, '/')
+    textureFolderName = getFolderName[1]
     # catalogUUIDFromFile = str(createUUID, ":Material/", catalogName, ":", catalogName)
     
     if (Path(ba_catalogFile).is_file() == False):
-        print("blender_asset.cat was not found!")
-        print("creating blender_asset.cat.txt")
+        
         
         createCatalogFile = open(ba_catalogFile, "w")
         with open(ba_catalogFile, "w") as catalogFile:
@@ -202,9 +234,9 @@ def createCatalongName():
             catalogFile.write(":")
             catalogFile.write("Material")
             catalogFile.write("/")
-            catalogFile.write(catalogName)
+            catalogFile.write(textureCategeoryName)
             catalogFile.write(":")
-            catalogFile.write(catalogName)
+            catalogFile.write(textureFolderName)
             catalogFile.close()
                     
     else:
@@ -217,9 +249,9 @@ def createCatalongName():
             catalogFile.write(":")
             catalogFile.write("Material")
             catalogFile.write("/")
-            catalogFile.write(catalogName)
+            catalogFile.write(textureCategeoryName)
             catalogFile.write(":")
-            catalogFile.write(catalogName)
+            catalogFile.write(textureFolderName)
             catalogFile.close()
     return createUUID                        
    

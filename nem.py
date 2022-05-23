@@ -29,9 +29,10 @@ print(" this program is provided as is there are no guaratees ")
 
 
 
-mainTextureFolder = input("enter texture directory that contains all the subfolders with textures\n")
-autoMatPath = os.path.join(os.getcwd() + "\matauto.py")   
+mainTextureFolder = input("enter directory")
+autoMatPath = os.path.join(os.getcwd() + "\matautotest2.py")   
 texFolders = list()
+catalogMatNames = list()
 
 def findAllTextureFolders():
     for root,dirs,files in os.walk(mainTextureFolder):
@@ -40,12 +41,20 @@ def findAllTextureFolders():
             texFolders.append(root)
     return texFolders
 
+
+
 def createBlendInSubfolders():
         
     findAllTextureFolders()
     for blendPath in texFolders:    
+        
+        # writeRootTxt.write(mainTextureFolder)  
+        # writeRootTxt.close()     
         blendPath = Path(blendPath)
         blendName = blendPath.stem + ".blend"
+        writeRootTxt = open(os.path.join(blendPath, "rootDir.txt"), 'w')
+        writeRootTxt.write(mainTextureFolder)
+        writeRootTxt.close()
         
         checkForBlendFile = Path(os.path.join(blendPath,blendName))
         
@@ -55,8 +64,9 @@ def createBlendInSubfolders():
             print("created blend files:" + createBlendFile.name)
         else:
             print("blend file " + checkForBlendFile.name + " already exists!")
+         
 
-           
+             
     
 
     
@@ -71,9 +81,13 @@ def createMaterialInBlend():
         launchBlender = subprocess.run(["blender","--enable-autoexec",fullBlendPath, '--python', autoMatPath])
         print("material created:" + blendFiles.stem)            
 
+def mainFolder():
+  return mainTextureFolder
+        
+
 createBlendInSubfolders()
 createMaterialInBlend()
-print("all conversions done!") 
+# print("all conversions done!")    
     
 
 
