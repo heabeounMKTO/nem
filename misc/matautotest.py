@@ -1,3 +1,4 @@
+
 from gettext import Catalog
 import uuid
 from pathlib import Path
@@ -5,28 +6,37 @@ import os
 
 # import bpy
 
-matfolders = Path('E:\Extreme Pbr Combo With 1000 Materials Addon For Blender 2.79-2.8-2.81\Extreme PBR Combo With 1000+ Materials Addon For Blender 2.79-2.81-2.82\EXTREME_PBR_LIB')
+matfolders = Path("D:\\nem\\nemtest\\nem\\testdir")
 parentFolder = matfolders.parent
 parentFolderName = parentFolder.name
 texFolders = list()
 catalogUUID = list()
+#walks directory to find 
+#all root folders within sub directory
+
+
 
 def findAllTextureFolders():
     for root,dirs,files in os.walk(matfolders):
-            
-        if not dirs:
-            texFolders.append(root)
+        if files:   
+            if not dirs:
+                texFolders.append(root)
+    print(texFolders)
     return texFolders
 
 
 def createCatalog_UUID():
     findAllTextureFolders()
-    for x in texFolders:
-        x = Path(x)
-        parentFolder = x.parent
-        parentFolderName = parentFolder.name 
-        catalog_uuid = uuid.uuid1()
-        print(catalog_uuid,":Material/"+ parentFolderName,":",parentFolderName)  
-        
+    for testsplitPath in texFolders:
+        testsplitPath = Path(testsplitPath)
+        splitcatpath =  os.path.relpath(testsplitPath, matfolders)
+        getFolderName = os.path.split(splitcatpath)
+        textureCategeoryName = getFolderName[0].replace(os.sep, '/')
+        textureFolderName = getFolderName[1]
+        print(textureCategeoryName)
+        print(textureFolderName)
 
-createCatalog_UUID()
+
+# findAllTextureFolders()
+createCatalog_UUID()   
+#splitPathTest()

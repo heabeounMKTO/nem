@@ -29,59 +29,65 @@ print(" this program is provided as is there are no guaratees ")
 
 
 
-mainTextureFolder = Path('D:\nem\nemtest\nem\testdir')
-autoMatPath = os.path.join(os.getcwd() + "\matauto.py")   
+mainTextureFolder = input("enter directory")
+autoMatPath = os.path.join(os.getcwd() + "\matautotest2.py")   
 texFolders = list()
 catalogMatNames = list()
 
-# def findAllTextureFolders():
-#     for root,dirs,files in os.walk(mainTextureFolder):
+def findAllTextureFolders():
+    for root,dirs,files in os.walk(mainTextureFolder):
             
-#         if not dirs:
-#             texFolders.append(root)
-#     return texFolders
+        if not dirs:
+            texFolders.append(root)
+    return texFolders
 
 
 
-# def createBlendInSubfolders():
+def createBlendInSubfolders():
         
-#     findAllTextureFolders()
-#     for blendPath in texFolders:    
-#         blendPath = Path(blendPath)
-#         blendName = blendPath.stem + ".blend"
+    findAllTextureFolders()
+    for blendPath in texFolders:    
         
-#         checkForBlendFile = Path(os.path.join(blendPath,blendName))
+        # writeRootTxt.write(mainTextureFolder)  
+        # writeRootTxt.close()     
+        blendPath = Path(blendPath)
+        blendName = blendPath.stem + ".blend"
+        writeRootTxt = open(os.path.join(blendPath, "rootDir.txt"), 'w')
+        writeRootTxt.write(mainTextureFolder)
+        writeRootTxt.close()
         
-#         if(checkForBlendFile.is_file() == False):
-#             createBlendFile = open(os.path.join(blendPath, blendName), 'w')
-#             print("creating blend file: " + createBlendFile.name)
-#             print("created blend files:" + createBlendFile.name)
-#         else:
-#             print("blend file " + checkForBlendFile.name + " already exists!")
+        checkForBlendFile = Path(os.path.join(blendPath,blendName))
+        
+        if(checkForBlendFile.is_file() == False):
+            createBlendFile = open(os.path.join(blendPath, blendName), 'w')
+            print("creating blend file: " + createBlendFile.name)
+            print("created blend files:" + createBlendFile.name)
+        else:
+            print("blend file " + checkForBlendFile.name + " already exists!")
+         
 
-           
+             
     
 
     
-# def createMaterialInBlend():
-#     findAllTextureFolders()
-#     for blendFiles in texFolders:
-#         blendFiles = Path(blendFiles)
-#         blendName = blendFiles.stem + ".blend"
-#         fullBlendPath = os.path.join(blendFiles, blendName)
+def createMaterialInBlend():
+    findAllTextureFolders()
+    for blendFiles in texFolders:
+        blendFiles = Path(blendFiles)
+        blendName = blendFiles.stem + ".blend"
+        fullBlendPath = os.path.join(blendFiles, blendName)
         
-#         print("opening file: " + blendName)
-#         launchBlender = subprocess.run(["blender","--enable-autoexec",fullBlendPath, '--python', autoMatPath])
-#         print("material created:" + blendFiles.stem)            
+        print("opening file: " + blendName)
+        launchBlender = subprocess.run(["blender","--enable-autoexec",fullBlendPath, '--python', autoMatPath])
+        print("material created:" + blendFiles.stem)            
 
-def createMaterialsCatalog():
-    findAllMatCatalog = os.listdir(mainTextureFolder)
-    for catalogFolders in findAllMatCatalog:
+def mainFolder():
+  return mainTextureFolder
         
 
 createBlendInSubfolders()
 createMaterialInBlend()
-print("all conversions done!")    
+# print("all conversions done!")    
     
 
 

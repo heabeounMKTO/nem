@@ -211,12 +211,15 @@ def markAsset():
 #    
 def createCatalongName():
     
+    readRootDir = open(os.path.join(directoryPath, "rootDir.txt"), 'r')
+    rootDir = readRootDir.readlines()[0]
     
+    ba_catalogFile = os.path.join(rootDir,"blender_assets.cats.txt")
     
-    
-    ba_catalogFile = os.path.join(assetDir,"blender_assets.cats.txt")
-    
-    
+    splitCatalogPath = os.path.relpath(directoryPath, rootDir)
+    getFolderName = os.path.split(splitCatalogPath)
+    textureCategeoryName = getFolderName[0].replace(os.sep, '/')
+    textureFolderName = getFolderName[1]
     # catalogUUIDFromFile = str(createUUID, ":Material/", catalogName, ":", catalogName)
     
     if (Path(ba_catalogFile).is_file() == False):
@@ -231,9 +234,9 @@ def createCatalongName():
             catalogFile.write(":")
             catalogFile.write("Material")
             catalogFile.write("/")
-            catalogFile.write(catalogName)
+            catalogFile.write(textureCategeoryName)
             catalogFile.write(":")
-            catalogFile.write(catalogName)
+            catalogFile.write(textureFolderName)
             catalogFile.close()
                     
     else:
@@ -246,9 +249,9 @@ def createCatalongName():
             catalogFile.write(":")
             catalogFile.write("Material")
             catalogFile.write("/")
-            catalogFile.write(catalogName)
+            catalogFile.write(textureCategeoryName)
             catalogFile.write(":")
-            catalogFile.write(catalogName)
+            catalogFile.write(textureFolderName)
             catalogFile.close()
     return createUUID                        
    
@@ -257,7 +260,7 @@ createCatalongName()
 drawPbrSphere()
 markAsset()
 
-#bpy.app.timers.register(saveAndQuit, first_interval = 15)
+bpy.app.timers.register(saveAndQuit, first_interval = 15)
 #                
 #        
 #              

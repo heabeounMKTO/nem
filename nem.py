@@ -73,7 +73,7 @@ def createMaterialInBlend():
 
 createBlendInSubfolders()
 createMaterialInBlend()
-print("all conversions done!")    
+print("all conversions done!") 
     
 
 

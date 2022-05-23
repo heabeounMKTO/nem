@@ -6,12 +6,29 @@
 
 VERSION 1
 
-41970529-ecf6-4bb9-884d-6e88cbacfdd7:Material:Material
-1054f3b5-23cc-45ae-bf87-4b11522f5fdd:Material/Bronze:Bronze
-5f51489a-60d7-461c-bdaf-563115b2e4a5:Material/Bronze:Bronze
-eeff1920-89a7-4f9f-bfb4-1a1e3bba1db6:Material/Bronze:Bronze
-57069566-9c07-4ae6-bc17-2dda1338f9f9:Material/Fabric:Fabric
-be9be539-b85c-42f0-a57b-576875ba525d:Material/Fabric:Fabric
-e6dd810c-e194-47ac-9f73-b6297dcfb826:Material/Fabric:Fabric
-
-e7539c2d-47ed-4370-8b8d-7ec0b3dd0b1c:Material/FOOD:FOOD
+43adc219-882d-45f3-a502-3d167889ffdd:Material:Material
+3ba5f115-1ec2-4986-84db-b94b4221d5d7:Material/Bronze:2K_Bronze_03
+6f41482f-cc01-48c1-a260-6abe8ffe59de:Material/Bronze:2K_Bronze_02
+7b746c97-afd5-46b0-b942-26cdb2d5e887:Material/Bronze:2K_Bronze_03
+9adc7f59-7a7b-4248-98ce-6a0217d88d5f:Material/Bronze:2K_Bronze_01
+e728acdd-03bd-4e38-a92f-0bc27346efb5:Material/Bronze:2K_Bronze_01
+f460f7ac-0cad-4f65-8819-a334cd3fbfaf:Material/Bronze:2K_Bronze_02
+db02724e-b24f-43c9-9483-c374e8bd3187:Material/FOOD:Material-FOOD
+3d8d1151-1fe1-4c79-9522-2dfd73ffda36:Material/FOOD/Dessert:2K_Candy01
+7006b098-72d0-45ab-ae87-17e4c130c582:Material/FOOD/Dessert:2K_Candy03
+7b383a75-1b22-45a0-88b4-796e52c3d0c4:Material/FOOD/Dessert:2K_Candy01
+97706088-49eb-4179-8f82-b2988ba7c7f9:Material/FOOD/Dessert:2K_Candy03
+c1200d24-d2f6-4bba-9f61-67b1249c3b92:Material/FOOD/Dessert:2K_Candy02
+c9ac9910-7717-4e49-a5ef-a5c36d2ff022:Material/FOOD/Dessert:2K_Candy02
+4b45ae63-6d4a-4676-a3a6-21c5fabace79:Material/FOOD/Not Dessert:2K_Oat_pops_01
+6ac3f014-a8b0-41ef-aa1c-d8d8676505cd:Material/FOOD/Not Dessert:2K_Mixed_seeds_01
+7e1660bf-cfe3-4cc0-ba3e-166498392997:Material/FOOD/Not Dessert:2K_Pumpkin_seeds_01
+96c289b3-5dd4-4568-b67a-75a4fe5070ef:Material/FOOD/Not Dessert:2K_Oat_pops_01
+a8614e88-19fe-4893-9143-fe97868a01df:Material/FOOD/Not Dessert:2K_Mixed_seeds_01
+bd881bf3-8544-4aef-9148-38cfeba6e626:Material/FOOD/Not Dessert:2K_Pumpkin_seeds_01
+a2563273-7861-4070-bff5-412fc273897c:Material/Fabric:2K_Fabric02
+b8a8c8b6-8012-450b-b5de-e3754f684795:Material/Fabric:2K_Fabric02
+beca91a9-03f9-4fb7-98ee-f0e15ecca790:Material/Fabric:2K_Fabric01
+ce36bd75-ea9d-410f-9a18-a86ffcb1958d:Material/Fabric:2K_Fabric01
+e7a6dcee-5312-4c7a-ab1c-a8c993fd9b41:Material/Fabric:2K_Fabric03
+eface34a-66aa-4d54-a05e-ab404c59f9ed:Material/Fabric:2K_Fabric03

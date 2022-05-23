@@ -1,0 +1,7 @@
+#Other lines are of the format uu
+VERSION 1
+
+e74ce304-7721-4ef8-a415-ee9a46c0b2f1:Material/Dessert:Dessert
+298b1dd3-7128-4cff-81ce-50351b477ee2:Material/F:O
+5da01c33-0ac6-4884-8ea0-914c4a73bbe5:Material/F:O
+9e2febb6-3897-4c25-a4c7-6a0c6ba701ba:Material/FOOD/Dessert:2K_Candy01
