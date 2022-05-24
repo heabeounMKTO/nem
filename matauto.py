@@ -65,7 +65,7 @@ def createPrincipledShader(id, type):
    if type == "Principled":
         #create all nodes
        relPath = bpy.path.abspath("//")
-       
+       dispNode = nodes.new(type='ShaderNodeDisplacement')
        shader = nodes.new(type='ShaderNodeBsdfPrincipled')
        shader.location = (-300, 0)
 
@@ -115,6 +115,7 @@ def createPrincipledShader(id, type):
    links.new(roughness.outputs[0], shader.inputs["Roughness"])
    links.new(disp.outputs[0], output.inputs["Displacement"])
    links.new(texCoords.outputs[2], mappingNode.inputs["Vector"])
+   links.new(disp.outputs[0], dispNode.inputs["Height"])
    # links.new(alphaCh.outputs[0]), shader.inputs['Alpha'])
    #tex coords and mapping linking 
    links.new(mappingNode.outputs[0], diffuse.inputs[0])
@@ -122,7 +123,7 @@ def createPrincipledShader(id, type):
    links.new(mappingNode.outputs[0], disp.inputs[0])
    links.new(mappingNode.outputs[0], normal.inputs[0])
    links.new(shader.outputs[0], output.inputs[0])
-   
+   links.new(dispNode.outputs[0], output.inputs[2] )
 
    return mat
       
