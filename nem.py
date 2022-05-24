@@ -30,7 +30,7 @@ print(" this program is provided as is there are no guaratees ")
 
 
 mainTextureFolder = input("enter directory")
-autoMatPath = os.path.join(os.getcwd() + "\matautotest2.py")   
+autoMatPath = os.path.join(os.getcwd() + "\matauto.py")   
 texFolders = list()
 catalogMatNames = list()
 
@@ -81,13 +81,20 @@ def createMaterialInBlend():
         launchBlender = subprocess.run(["blender","--enable-autoexec",fullBlendPath, '--python', autoMatPath])
         print("material created:" + blendFiles.stem)            
 
-def mainFolder():
-  return mainTextureFolder
-        
+def removePathTxt():
+    findAllTextureFolders()
+    for blendPath in texFolders:     
+        blendPath = Path(blendPath)
+        os.remove(os.path.join(blendPath, "rootDir.txt"))
+
+
+
 
 createBlendInSubfolders()
 createMaterialInBlend()
-# print("all conversions done!")    
+print("removing roorDir.txt from all directories")
+removePathTxt()
+print("all conversions done!")    
     
 
 
