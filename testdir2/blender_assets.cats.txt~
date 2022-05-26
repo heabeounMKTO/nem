@@ -1,0 +1,30 @@
+# This is an Asset Catalog Definition file for Blender.
+#
+# Empty lines and lines starting with `#` will be ignored.
+# The first non-ignored line should be the version indicator.
+# Other lines are of the format "UUID:catalog/path/for/assets:simple catalog name"
+
+VERSION 1
+
+501bd1f4-0ac4-4365-9561-4bc4de0362eb:Material:Material
+e74ce304-7721-4ef8-a415-ee9a46c0b2f1:Material/Dessert:Dessert
+298b1dd3-7128-4cff-81ce-50351b477ee2:Material/F:O
+5da01c33-0ac6-4884-8ea0-914c4a73bbe5:Material/F:O
+1b6b86e3-3134-4c1f-902e-2ccf2e12b3e9:Material/FOOD:Material-FOOD
+68f01794-ac25-45b9-ac3c-85ab6d92b87b:Material/FOOD/Dessert:2K_Candy01
+9e2febb6-3897-4c25-a4c7-6a0c6ba701ba:Material/FOOD/Dessert:2K_Candy01
+c12c4db8-4cb8-404c-ae59-d8dd29c3dbe5:Material/FOOD/Dessert:2K_Candy01
+c4384889-de30-4281-9ef5-569403f29ff0:Material/FOOD/Dessert:2K_Candy01
+d5ab8c42-17b8-41fc-b20d-e1d30bf97701:Material/FOOD/Dessert:2K_Candy01
+001b2f0f-b3ca-4cb5-9545-08cc3f306e55:Material/FOOD/Not Dessert:2K_Mixed_seeds_01
+0487a64b-7d38-409a-9918-9840c2624cd3:Material/FOOD/Not Dessert:2K_Mixed_seeds_01
+102b80ae-35bb-4cb8-abf2-4bfa1c368079:Material/FOOD/Not Dessert:2K_Mixed_seeds_01
+0cfcf502-3491-4937-bed7-8e3e7e7110b5:Material/Fabric:2K_Fabric02
+29323969-a925-4c49-b81a-8e96c726bb27:Material/Fabric:2K_Fabric01
+4639db2e-ca40-4e2c-88c3-b3dee978aa3a:Material/Fabric:2K_Fabric03
+4e1fd765-ed8c-40c1-8c4c-912fa1fe1643:Material/Fabric:2K_Fabric03
+8cec1870-180d-4c52-a017-83a36369f8ad:Material/Fabric:2K_Fabric01
+bd9798e9-cb1f-4184-9f96-27adf491bf0a:Material/Fabric:2K_Fabric02
+
+e8ae9170-60c2-491c-9d89-3a55792569d5:Material/FOOD/Dessert:2K_Candy01
+7076cb7b-78ae-45bf-baa4-c2449cf6c4f8:Material/FOOD/Not Dessert:2K_Mixed_seeds_01

@@ -1,0 +1,24 @@
+# This is an Asset Catalog Definition file for Blender.
+#
+# Empty lines and lines starting with `#` will be ignored.
+# The first non-ignored line should be the version indicator.
+# Other lines are of the format "UUID:catalog/path/for/assets:simple catalog name"
+
+VERSION 1
+
+4dfefcb1-f42e-41f3-825b-fda40ce47f8a:Material:Material
+4db2df00-4be3-48c0-bfe3-eaf033225f8c:Material/Bronze:2K_Bronze_02
+676565a4-4691-4aba-ad65-eaae9c6966c7:Material/Bronze:2K_Bronze_01
+a08f0beb-2110-4bf7-a918-cc83e8c2ddb6:Material/Bronze:2K_Bronze_01
+b0b2d9bc-8a2c-4d3c-887e-927e7c92a72a:Material/Bronze:Material-Bronze
+b5bab825-068f-4d77-8f19-a2e2c106164a:Material/Bronze:2K_Bronze_01
+be9605a6-5b80-49a6-ac80-61be73471ed7:Material/Bronze:2K_Bronze_02
+ce566e58-3d26-4623-9c17-482010fdbc84:Material/Bronze:2K_Bronze_02
+e2f56921-2cc9-403f-bb28-cf87244c896d:Material/Bronze:2K_Bronze_02
+ea13b1c5-69fb-44a0-a00f-86cb9441ab01:Material/Bronze:2K_Bronze_02
+9c549c48-d755-4739-ab59-8fa166ddd6ee:Material/Bronze/2K_Bronze_01:2K_Bronze_01.blend
+ecad953f-791a-4337-b871-c9edc489f913:Material/Bronze/2K_Bronze_01:2K_Bronze_01.blend
+61bdd97c-67e3-472b-8f9f-14aca8c1630d:Material/FOOD:Material-FOOD
+414732e6-8ab7-4be2-9cc6-aa8456d2341b:Material/FOOD/Dessert:2K_Candy01
+b897f643-b8e5-4174-a1fc-2a11a5377df9:Material/FOOD/Dessert:2K_Candy01
+d8f721a7-cc78-4e03-8642-31a3393e0f41:Material/FOOD/Dessert:2K_Candy01
