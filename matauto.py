@@ -16,6 +16,7 @@ createUUID = str(uuid.uuid4())
 filepath = bpy.data.filepath
 directory = os.path.dirname(filepath)
 directoryPath = Path(directory)
+
 catalogPath = Path(directoryPath.parent)
     
 catalogName = catalogPath.name
@@ -65,7 +66,7 @@ def createPrincipledShader(id, type):
    if type == "Principled":
         #create all nodes
        relPath = bpy.path.abspath("//")
-       dispNode = nodes.new(type='ShaderNodeDisplacement')
+       
        shader = nodes.new(type='ShaderNodeBsdfPrincipled')
        shader.location = (-300, 0)
 
@@ -115,7 +116,6 @@ def createPrincipledShader(id, type):
    links.new(roughness.outputs[0], shader.inputs["Roughness"])
    links.new(disp.outputs[0], output.inputs["Displacement"])
    links.new(texCoords.outputs[2], mappingNode.inputs["Vector"])
-   links.new(disp.outputs[0], dispNode.inputs["Height"])
    # links.new(alphaCh.outputs[0]), shader.inputs['Alpha'])
    #tex coords and mapping linking 
    links.new(mappingNode.outputs[0], diffuse.inputs[0])
@@ -123,18 +123,13 @@ def createPrincipledShader(id, type):
    links.new(mappingNode.outputs[0], disp.inputs[0])
    links.new(mappingNode.outputs[0], normal.inputs[0])
    links.new(shader.outputs[0], output.inputs[0])
-   links.new(dispNode.outputs[0], output.inputs[2] )
+   
 
    return mat
       
      
 def drawPbrSphere():
-   # idx = bpy.context.window_manager.windows[:].index(bpy.context.window)
-   # window = bpy.context.window_manager.windows[idx]
-   # screen = window.screena
-   # for a in screen.areas:
-   #     if(a.type == 'VIEW_3D'):
-   #         print("area is view3d")
+   
    blendname = bpy.path.basename(bpy.context.blend_data.filepath)
       
    mat = createPrincipledShader(blendname.removesuffix(".blend"), "Principled")
@@ -143,11 +138,9 @@ def drawPbrSphere():
    bpy.ops.mesh.primitive_uv_sphere_add(segments=32, radius = 0.5, location=(0,0,0))
    bpy.ops.object.shade_smooth()
    bpy.context.active_object.data.materials.append(mat)
-   # time.sleep(3)
-   
-   # bpy.data.materials[blendname].asset_mark()
    print("pbrSphereDrawn.")                
-#find files 
+
+21#find files 
 def find_files(substring, path='.', extensions=[]):
    from os import listdir
    from re import search, IGNORECASE
@@ -172,14 +165,7 @@ def saveAndQuit():
    bpy.ops.wm.quit_blender()        
 
 
-# def get_context():
-#     # create a context that works when blender is executed from the command line.
-#     idx = bpy.context.window_manager.windows[:].index(bpy.context.window)
-#     window = bpy.context.window_manager.windows[idx]
-#     screen = window.screen
-#     views_3d = sorted(
-#             [a for a in screen.areas if a.type == 'VIEW_3D'],
-#             key=lambda a: (a.width * a.height))
+
 def markAsset():
    
    target_catalog = catalogName
@@ -190,26 +176,7 @@ def markAsset():
    
    asset = bpy.data.materials[blendname.removesuffix(".blend")].asset_data
    asset.catalog_id = createUUID    
-## def verifyAssetPreview():
-##     assetMat = [a for a in bpy.data.materials if a.asset_data]
-##     while assetMat:
-##         preview = assetMat[0].preview
-##         if preview is None:
-##             assetMat[0].asset_generate_preview()
-##             return 0.2
-##             print("preview generated for asset")
-##         arr = np.zeros((preview.image_size[0] * preview.image_size[1]) * 4, dtype=np.float32)
-##         preview.image_pixels_float.foreach_get(arr)
-##         if np.all((arr == 0)):            
-##             assetMat[0].asset_generate_preview()
-##             return 0.2
-##         else:
-##             assetMat.pop(0)
 
-##     return None
-#    
-#    
-#    
 def createCatalongName():
     
     readRootDir = open(os.path.join(directoryPath, "rootDir.txt"), 'r')
