@@ -116,7 +116,9 @@ def createPrincipledShader(id, type):
        
        shader = nodes.new(type='ShaderNodeBsdfPrincipled')
        shader.location = (300, 0)
-
+       
+       
+       
        diffuse = nodes.new(type = 'ShaderNodeTexImage')
        diffuse.location = (-300, 100)
        
@@ -129,8 +131,7 @@ def createPrincipledShader(id, type):
        roughness = nodes.new(type = 'ShaderNodeTexImage')
        roughness.location = (-300, -300)
        
-       metallic = nodes.new(type = 'ShaderNodeTexImage')
-       metallic.location = (-300, -600)
+       
       
        disp = nodes.new(type = 'ShaderNodeTexImage')
        disp.location = (-300, -800)
@@ -139,7 +140,15 @@ def createPrincipledShader(id, type):
        mappingNode.location = (-1600, 0)
        texCoords =nodes.new(type = 'ShaderNodeTexCoord')
        texCoords.location = (-2000, 0)
-
+       
+       checkMetal = checkForMetallicMap()
+       if checkMetal == True:
+          metallic = nodes.new(type = 'ShaderNodeTexImage')
+          metallic.location = (-300, -600)
+       else:
+          metallic = nodes.new(type = 'ShaderNodeTexImage')
+          metallic.location = (-300, -600)
+          shader.inputs.get("Metallic").default_value = 0.5  
        # alphaCh = nodes.new(type = 'ShaderNodeTexImage')
        #add maps from relative path to created nodes
                 
@@ -218,7 +227,18 @@ def addMapsFromRelativePath(nodeName, textureDict, colorSpace):
                nodeName.image = bpy.data.images.load(imgpath)
                nodeName.image.colorspace_settings.name = colorSpace
 
-  
+def checkForMetallicMap():
+    relPath = bpy.path.abspath("//")
+    
+    for root, subdir,filename in os.walk(relPath):
+        
+        for file in filename:
+            checkMetallic = any(ele in file for ele in metallicDict)
+            return bool(checkMetallic)
+            
+            
+            
+            
 def saveAndQuit():
    bpy.ops.wm.save_mainfile()
    bpy.ops.wm.quit_blender()        

@@ -116,9 +116,10 @@ def createPathtxt():
     print("creating rootDir.txt in all texture folders")
     for blendPath in texFolders:       
         blendPath = Path(blendPath)
-        writeRootTxt = open(os.path.join(blendPath, "rootDir.txt"), 'w')
-        writeRootTxt.write(mainTextureFolder)
-        writeRootTxt.close()
+        with open(os.path.join(blendPath, "rootDir.txt"), 'w') as writeRootTxt:
+            writeRootTxt.write(mainTextureFolder)
+            writeRootTxt.write('\n')
+            writeRootTxt.write(os.getcwd()) #this references the XML file
         cPathTxtCount.append(blendPath)
         for dir in cPathTxtCount:
             pass
@@ -186,7 +187,7 @@ def main():
     
     elif mode == "2":
         createPathtxt()
-        renewDeleteAllBlendsInDir()
+        
         renewCreateBlend()
         renewCreateMaterial()     
         removePathTxt()

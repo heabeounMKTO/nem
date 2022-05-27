@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dictionary>
+    
+    <!-- DIFFUSE DICTIONARY-->
+    <diffuse textureType="diffuse">
+        <keyword>albedo</keyword>
+    </diffuse>
+   
+    <diffuse textureType="diffuse">
+        <keyword>color</keyword>
+    </diffuse>
+    <diffuse textureType="diffuse">
+        <keyword>CLR</keyword>
+    </diffuse>
+    <diffuse textureType="diffuse">
+        <keyword>diffuse</keyword>
+    </diffuse>
+    
+    <diffuse textureType="diffuse">
+        <keyword>alb</keyword>
+    </diffuse>
+    <diffuse textureType="diffuse">
+        <keyword>COLOR</keyword>
+    </diffuse>
+    
+    <!-- NORMxALS DICTIONARY-->
+    <normal textureType="normal">
+        <keyword>NRM</keyword>
+    </normal>
+    <normal textureType="normal">
+        <keyword>normal</keyword>
+    </normal>
+    <normal textureType="normal">
+        <keyword>NORMAL</keyword>
+    </normal> 
+
+    <!-- METALLIC DICTIONARY -->
+    <metallic textureType="metallic">
+        <keyword>METAL</keyword>
+    </metallic>
+    <metallic textureType="metallic">
+        <keyword>metallic</keyword>
+    </metallic>
+    <metallic textureType="metallic">
+        <keyword>mtl</keyword>
+    </metallic>
+
+    <!-- ROUGHNESS DICT -->
+    <roughness textureType = "roughness">
+        <keyword>roughness</keyword>
+    </roughness>
+    <roughness textureType = "roughness">
+        <keyword>rough</keyword>
+    </roughness>
+
+    <!-- DISPLACEMENT DICT-->
+    <displacement textureType = "displacement">
+        <keyword>disp</keyword>
+    </displacement>
+    <displacement textureType = "displacement">
+        <keyword>displacement</keyword>
+    </displacement>
+</dictionary>    
+
+   
+
+
+
+   

@@ -35,7 +35,7 @@ print("                                     COMMANDS LIST:                      
 print("[1] update mat : updates textures in input directory without overwriting existing ones")
 print("[2] renew mat: deletes all existing .blend files in directory and creates new ones")
 
-print("                     ****utilities****                        ")
+print("                                   ****utilities****                        ")
 print("[3] delete blend: deletes all blend file in input directory")
 print("[4] remove all rootDir.txt from dir")
 print("[5] create rootDir.txt in all mat dir")
