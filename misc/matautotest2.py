@@ -218,7 +218,7 @@ def addMapsFromRelativePath(nodeName, textureDict, colorSpace):
                nodeName.image = bpy.data.images.load(imgpath)
                nodeName.image.colorspace_settings.name = colorSpace
 
-  
+ 
 def saveAndQuit():
    bpy.ops.wm.save_mainfile()
    bpy.ops.wm.quit_blender()        

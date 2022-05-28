@@ -32,6 +32,8 @@ dispDict = list()
 roughnessDict = list()
 specularDict = list()
 alphaDict = list()
+emissionDict = list()
+metallicKeywordDict = list()
 #parse XML section
 
 dictXMLtree = open(os.path.join(directoryPath, "rootDir.txt"), 'r')
@@ -42,37 +44,11 @@ dictRoot = dictXML.getroot()
 
     
 
-
-def findDiffuseDict():
-    
-    for diffuse in dictRoot.findall("diffuse"):
-        keyword = diffuse.find("keyword").text
-        diffuseDict.append(keyword)
-    return diffuseDict
-
-def findNormalDict():
-    for normal in dictRoot.findall("normal"):
-        keyword = normal.find("keyword").text
-        normalDict.append(keyword)
-    return normalDict
-
-def findMetallicDict():
-    for metallic in dictRoot.findall("metallic"):
-        keyword = metallic.find("keyword").text
-        metallicDict.append(keyword)
-    return metallicDict
-
-def findDispDict():
-    for displacement in dictRoot.findall("displacement"):
-        keyword = displacement.find("keyword").text
-        dispDict.append(keyword)
-    return dispDict
-
-def findRoughnessDict():
-    for roughness in dictRoot.findall("roughness"):
-        keyword = roughness.find("keyword").text
-        roughnessDict.append(keyword)
-    return roughnessDict
+def findDict(word, dictName):
+    for word in dictRoot.findall(word):
+        keyword = word.find("keyword").text
+        dictName.append(keyword)
+    return dictName
 
 
 
@@ -141,22 +117,41 @@ def createPrincipledShader(id, type):
        texCoords =nodes.new(type = 'ShaderNodeTexCoord')
        texCoords.location = (-2000, 0)
        
-       checkMetal = checkForMetallicMap()
+       checkMetal = checkForMap(mapName = 'metallic', dictName=metallicDict)
        if checkMetal == True:
           metallic = nodes.new(type = 'ShaderNodeTexImage')
           metallic.location = (-300, -600)
+          addMapsFromRelativePath(metallic,metallicDict, "Non-Color")
        else:
-          metallic = nodes.new(type = 'ShaderNodeTexImage')
-          metallic.location = (-300, -600)
-          shader.inputs.get("Metallic").default_value = 0.5  
-       # alphaCh = nodes.new(type = 'ShaderNodeTexImage')
-       #add maps from relative path to created nodes
-                
+           checkIfMetalMat = checkForMap(mapName = 'metallicKeyword', dictName=metallicKeywordDict)
+           if checkIfMetalMat == True:
+               shader.inputs.get("Metallic").default_value = 1.0
+           else:
+               pass
+          
+            
+       
+       checkAlpha = checkForMap(mapName = 'alpha', dictName=alphaDict)
+       if checkAlpha == True:
+          alpha = nodes.new(type = 'ShaderNodeTexImage')
+          alpha.location = (-400, -800)
+          addMapsFromRelativePath(alpha, alphaDict, "Non-Color")
+       else:
+           shader.inputs.get("Alpha").default_value = 1.0
+        
+       checkEmission = checkForMap(mapName = 'emission', dictName=emissionDict)
+       if checkEmission == True:
+           emission = nodes.new(type = "ShaderNodeTexImage0000") 
+           emission.location = (-600, -1000)
+           addMapsFromRelativePath(emission, emissionDict, "sRGB")
+       else:
+           pass
+       
        addMapsFromRelativePath(diffuse, diffuseDict, "sRGB")
        addMapsFromRelativePath(normal, normalDict, "Non-Color")
        addMapsFromRelativePath(roughness, roughnessDict, "Non-Color")
        addMapsFromRelativePath(disp, dispDict, "Non-Color")
-       addMapsFromRelativePath(metallic,metallicDict, "Non-Color")
+       
        
        
        
@@ -227,16 +222,15 @@ def addMapsFromRelativePath(nodeName, textureDict, colorSpace):
                nodeName.image = bpy.data.images.load(imgpath)
                nodeName.image.colorspace_settings.name = colorSpace
 
-def checkForMetallicMap():
+def checkForMap(mapName, dictName):
     relPath = bpy.path.abspath("//")
     
     for root, subdir,filename in os.walk(relPath):
         
         for file in filename:
-            checkMetallic = any(ele in file for ele in metallicDict)
-            return bool(checkMetallic)
-            
-            
+            mapName = any(ele in file for ele in dictName)
+            return bool(mapName)
+    
             
             
 def saveAndQuit():
@@ -305,15 +299,19 @@ def createCatalogName():
    
 ###clearScene()
 
-findDiffuseDict()
-findNormalDict()
-findMetallicDict()
-findRoughnessDict()
-findDispDict()
+findDict(word='diffuse', dictName = diffuseDict)
+findDict(word='alpha', dictName = alphaDict)
+findDict(word="displacement", dictName = dispDict)
+findDict(word="normal", dictName=normalDict)
+findDict(word= "metallic", dictName=metallicDict)
+findDict(word="roughness", dictName=roughnessDict)
+findDict(word="emission", dictName=emissionDict)
+findDict(word="metallicKeyword", dictName=metallicKeywordDict)
+
 createCatalogName()
 drawPbrSphere()
 markAsset()
 
-bpy.app.timers.register(saveAndQuit, first_interval = 15)
+#bpy.app.timers.register(saveAndQuit, first_interval = 15)
 
 

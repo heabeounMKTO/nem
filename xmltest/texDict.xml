@@ -60,6 +60,45 @@
     <displacement textureType = "displacement">
         <keyword>displacement</keyword>
     </displacement>
+
+
+
+    <!-- ALPHA DICTIONARY -->
+    <alpha textureType = "alpha">
+        <keyword>alpha</keyword>
+    </alpha>
+    <alpha textureType = "alpha">
+        <keyword>opacity</keyword>
+    </alpha>
+    <alpha textureType = "alpha">
+        <keyword>mask</keyword>
+    </alpha>
+
+
+    <!-- METALLIC KEYWORD DICT-->
+
+    <metallicKeyword>
+        <keyword>Bronze</keyword>
+    </metallicKeyword>
+    <metallicKeyword>
+        <keyword>metal</keyword>
+    </metallicKeyword>
+    <metallicKeyword>
+        <keyword>silver</keyword>
+    </metallicKeyword>
+    <metallicKeyword>
+        <keyword>gold</keyword>
+    </metallicKeyword>
+    <metallicKeyword>
+        <keyword>tungsten</keyword>
+    </metallicKeyword>
+    <metallicKeyword>
+        <keyword>copper</keyword>
+    </metallicKeyword>
+
+
+
+
 </dictionary>    
 
    
