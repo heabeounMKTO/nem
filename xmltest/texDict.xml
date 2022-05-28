@@ -77,24 +77,9 @@
 
     <!-- METALLIC KEYWORD DICT-->
 
-    <metallicKeyword>
+    <metallickeyword textureType="metallickeyword">
         <keyword>Bronze</keyword>
-    </metallicKeyword>
-    <metallicKeyword>
-        <keyword>metal</keyword>
-    </metallicKeyword>
-    <metallicKeyword>
-        <keyword>silver</keyword>
-    </metallicKeyword>
-    <metallicKeyword>
-        <keyword>gold</keyword>
-    </metallicKeyword>
-    <metallicKeyword>
-        <keyword>tungsten</keyword>
-    </metallicKeyword>
-    <metallicKeyword>
-        <keyword>copper</keyword>
-    </metallicKeyword>
+    </metallickeyword>
 
 
 

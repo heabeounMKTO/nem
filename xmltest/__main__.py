@@ -12,6 +12,14 @@ root = tree.getroot()
 diffuseDict = list()
 normalDict = list()
 metallicDict = list()
+metallicKeyWordDict = list()
+
+def findMetallick():
+    for mtlk in root.findall("metallickeyword"):
+        label = mtlk.find("keyword").text
+        metallicKeyWordDict.append(label)
+    print(metallicKeyWordDict)
+
 
 def findDiffuseDict():
     for diffuse in root.findall("diffuse"):
@@ -26,11 +34,6 @@ def findNormalDict():
         normalDict.append(label)
     return normalDict
 
-with open("texture_dictionary.txt", 'r') as txt:
-    read = txt.readlines()[0]
-    print(read)
-    
-# findDiffuseDict()
-# findNormalDict()
-# print(diffuseDict)
-# print(normalDict)
+
+
+findMetallick()
