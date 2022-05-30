@@ -1,13 +1,9 @@
 import bpy 
 import os 
-import glob
 from os.path import join
 from pathlib import Path
-import time 
-from bpy.app.handlers import persistent
-import numpy as np
-import functools
 import uuid 
+import xml.etree.ElementTree as ET
 
 
 
@@ -16,19 +12,40 @@ createUUID = str(uuid.uuid4())
 filepath = bpy.data.filepath
 directory = os.path.dirname(filepath)
 directoryPath = Path(directory)
+print(directoryPath)
 catalogPath = Path(directoryPath.parent)
     
 catalogName = catalogPath.name
-    
+print(catalogName)    
 assetDir = Path(catalogPath.parent)
 
-    
-print(catalogName)
+#texture dictionary from texDict.XML
+diffuseDict = list()
+normalDict = list()
+metallicDict = list()
+dispDict = list()
+roughnessDict = list()
+specularDict = list()
+alphaDict = list()
+emissionDict = list()
+metallicKeywordDict = list()
+#parse XML section
 
-def clearScene():
-   
-   bpy.ops.object.select_all(action = "SELECT")
-   bpy.ops.object.delete()  
+dictXMLtree = open(os.path.join(directoryPath, "rootDir.txt"), 'r')
+readDictXML = dictXMLtree.readlines()[1]
+xMLFilePath = os.path.join(readDictXML, "texDict.xml")
+dictXML = ET.parse(xMLFilePath)
+dictRoot = dictXML.getroot()
+
+    
+
+def findDict(word, dictName):
+    for word in dictRoot.findall(word):
+        keyword = word.find("keyword").text
+        dictName.append(keyword)
+    return dictName
+
+
 
 def renderThumb():
    bpy.data.objects['Sphere'].select_set(True)
@@ -58,52 +75,80 @@ def createPrincipledShader(id, type):
    nodes = mat.node_tree.nodes
    links = mat.node_tree.links
    output = nodes.new(type='ShaderNodeOutputMaterial')
-   
+   output.location = (1200, 0)
    #additional types of materials and functions can be created from here
-   #principled shader below can be used as a template.
+   #principled shader belo1w can be used as a template.
 
    if type == "Principled":
         #create all nodes
        relPath = bpy.path.abspath("//")
+       displacement = nodes.new(type="ShaderNodeDisplacement")
+       displacement.location = (900, -300)
        
        shader = nodes.new(type='ShaderNodeBsdfPrincipled')
-       shader.location = (-300, 0)
-
+       shader.location = (300, 0)
+       
+       
+       
        diffuse = nodes.new(type = 'ShaderNodeTexImage')
+       diffuse.location = (-300, 100)
        
        normal = nodes.new(type = 'ShaderNodeTexImage')
+       normal.location = (-300, -100)
        
        normalMapNode = nodes.new (type = 'ShaderNodeNormalMap')
-       normalMapNode.location = (-800, -200)
+       normalMapNode.location = (-25, -450)
        
        roughness = nodes.new(type = 'ShaderNodeTexImage')
-
-       metallic = nodes.new(type = 'ShaderNodeTexImage')
+       roughness.location = (-300, -300)
        
+       
+      
        disp = nodes.new(type = 'ShaderNodeTexImage')
+       disp.location = (-300, -800)
        
        mappingNode = nodes.new(type = 'ShaderNodeMapping')
        mappingNode.location = (-1600, 0)
        texCoords =nodes.new(type = 'ShaderNodeTexCoord')
        texCoords.location = (-2000, 0)
-
-       # alphaCh = nodes.new(type = 'ShaderNodeTexImage')
-       #add maps from relative path to created nodes
-       #         
-       addMapsFromRelativePath(diffuse, "diff", "sRGB")
-       if(diffuse.image == None):
-           addMapsFromRelativePath(diffuse, "col", "sRGB")
-       addMapsFromRelativePath(normal, "nor", "Non-Color")
-       if(normal.image == None):
-           addMapsFromRelativePath(normal, "nrm", "Non-Color")
-       addMapsFromRelativePath(roughness, "rough", "Non-Color")
-       addMapsFromRelativePath(disp, "disp", "Non-Color")
-       addMapsFromRelativePath(metallic,"metal", "Non-Color")
-       if(metallic.image == None):
-           addMapsFromRelativePath(metallic, "met", "Non-Color")    
-       # addMapsFromRelativePath(alphaCh,"opacity", 'Non-Color')
-       # if(alphaCh.image == None):
-       #     addMapsFromRelativePath(alphaCh, "alpha","Non-Color")
+       
+       checkMetal = checkForMap(mapName = 'metallic', dictName=metallicDict)
+       if checkMetal == True:
+          metallic = nodes.new(type = 'ShaderNodeTexImage')
+          metallic.location = (-300, -600)
+          addMapsFromRelativePath(metallic,metallicDict, "Non-Color")
+       else:
+           checkIfMetalMat = checkIfMaterialType(dictName=metallicKeywordDict)
+           if checkIfMetalMat == True:
+               shader.inputs.get("Metallic").default_value = 1.0
+           else:
+               pass
+          
+            
+       
+       checkAlpha = checkForMap(mapName = 'alpha', dictName=alphaDict)
+       if checkAlpha == True:
+          alpha = nodes.new(type = 'ShaderNodeTexImage')
+          alpha.location = (-400, -800)
+          addMapsFromRelativePath(alpha, alphaDict, "Non-Color")
+       else:
+           shader.inputs.get("Alpha").default_value = 1.0
+        
+       checkEmission = checkForMap(mapName = 'emission', dictName=emissionDict)
+       if checkEmission == True:
+           emission = nodes.new(type = "ShaderNodeTexImage0000") 
+           emission.location = (-600, -1000)
+           addMapsFromRelativePath(emission, emissionDict, "sRGB")
+       else:
+           pass
+       
+       addMapsFromRelativePath(diffuse, diffuseDict, "sRGB")
+       addMapsFromRelativePath(normal, normalDict, "Non-Color")
+       addMapsFromRelativePath(roughness, roughnessDict, "Non-Color")
+       addMapsFromRelativePath(disp, dispDict, "Non-Color")
+       
+       
+       
        
        
        
@@ -113,8 +158,11 @@ def createPrincipledShader(id, type):
    links.new(normal.outputs[0], normalMapNode.inputs[1])
    links.new(normalMapNode.outputs[0], shader.inputs["Normal"])
    links.new(roughness.outputs[0], shader.inputs["Roughness"])
-   links.new(disp.outputs[0], output.inputs["Displacement"])
+   links.new(disp.outputs[0], displacement.inputs["Height"])
    links.new(texCoords.outputs[2], mappingNode.inputs["Vector"])
+   links.new(displacement.outputs[0], output.inputs["Displacement"])
+  
+  
    # links.new(alphaCh.outputs[0]), shader.inputs['Alpha'])
    #tex coords and mapping linking 
    links.new(mappingNode.outputs[0], diffuse.inputs[0])
@@ -128,12 +176,7 @@ def createPrincipledShader(id, type):
       
      
 def drawPbrSphere():
-   # idx = bpy.context.window_manager.windows[:].index(bpy.context.window)
-   # window = bpy.context.window_manager.windows[idx]
-   # screen = window.screena
-   # for a in screen.areas:
-   #     if(a.type == 'VIEW_3D'):
-   #         print("area is view3d")
+   
    blendname = bpy.path.basename(bpy.context.blend_data.filepath)
       
    mat = createPrincipledShader(blendname.removesuffix(".blend"), "Principled")
@@ -142,11 +185,8 @@ def drawPbrSphere():
    bpy.ops.mesh.primitive_uv_sphere_add(segments=32, radius = 0.5, location=(0,0,0))
    bpy.ops.object.shade_smooth()
    bpy.context.active_object.data.materials.append(mat)
-   # time.sleep(3)
-   
-   # bpy.data.materials[blendname].asset_mark()
    print("pbrSphereDrawn.")                
-#find files 
+
 def find_files(substring, path='.', extensions=[]):
    from os import listdir
    from re import search, IGNORECASE
@@ -160,25 +200,43 @@ def image_files(substring, path="."):
 
 #nodeName is the name given to nodes created in createPrincipledShader()
 #mapName is the name of the image files to search in the relative path
-def addMapsFromRelativePath(nodeName ,mapName, colorSpace):
+#mapName is the name of the image files to search in the relative path
+def addMapsFromRelativePath(nodeName, textureDict, colorSpace):
+   from re import search, IGNORECASE
    relPath = bpy.path.abspath("//")
-   for fp in image_files(mapName, path=relPath):
-       nodeName.image = bpy.data.images.load(join(relPath, fp))
-       nodeName.image.colorspace_settings.name = colorSpace
+
+   
+   
+   for root, subdir, filename in os.walk(relPath):
+       
+       for file in filename:
+           check = any(ele in file for ele in textureDict)
+           if check == True:
+               imgpath = os.path.join(directoryPath, file)
+               print(imgpath)
+               nodeName.image = bpy.data.images.load(imgpath)
+               nodeName.image.colorspace_settings.name = colorSpace
+
+def checkForMap(mapName, dictName):
+    relPath = bpy.path.abspath("//")
+    
+    for root, subdir,filename in os.walk(relPath):
+        
+        for file in filename:
+            mapName = any(ele in file for ele in dictName)
+            return bool(mapName)
+
+def checkIfMaterialType(dictName):
+    splitCurrentPath = os.path.split(directoryPath)
+    checkMat = any(ele in splitCurrentPath for ele in dictName)
+    return bool(checkMat)                
+            
 def saveAndQuit():
-  
    bpy.ops.wm.save_mainfile()
    bpy.ops.wm.quit_blender()        
 
 
-# def get_context():
-#     # create a context that works when blender is executed from the command line.
-#     idx = bpy.context.window_manager.windows[:].index(bpy.context.window)
-#     window = bpy.context.window_manager.windows[idx]
-#     screen = window.screen
-#     views_3d = sorted(
-#             [a for a in screen.areas if a.type == 'VIEW_3D'],
-#             key=lambda a: (a.width * a.height))
+
 def markAsset():
    
    target_catalog = catalogName
@@ -189,30 +247,12 @@ def markAsset():
    
    asset = bpy.data.materials[blendname.removesuffix(".blend")].asset_data
    asset.catalog_id = createUUID    
-## def verifyAssetPreview():
-##     assetMat = [a for a in bpy.data.materials if a.asset_data]
-##     while assetMat:
-##         preview = assetMat[0].preview
-##         if preview is None:
-##             assetMat[0].asset_generate_preview()
-##             return 0.2
-##             print("preview generated for asset")
-##         arr = np.zeros((preview.image_size[0] * preview.image_size[1]) * 4, dtype=np.float32)
-##         preview.image_pixels_float.foreach_get(arr)
-##         if np.all((arr == 0)):            
-##             assetMat[0].asset_generate_preview()
-##             return 0.2
-##         else:
-##             assetMat.pop(0)
 
-##     return None
-#    
-#    
-#    
-def createCatalongName():
+def createCatalogName():
     
     readRootDir = open(os.path.join(directoryPath, "rootDir.txt"), 'r')
     rootDir = readRootDir.readlines()[0]
+    rootDir = rootDir.rstrip('\n')
     
     ba_catalogFile = os.path.join(rootDir,"blender_assets.cats.txt")
     
@@ -256,14 +296,20 @@ def createCatalongName():
     return createUUID                        
    
 ###clearScene()
-createCatalongName()
-drawPbrSphere()
+findDict(word="metallickeyword", dictName=metallicKeywordDict)
+findDict(word='diffuse', dictName = diffuseDict)
+findDict(word='alpha', dictName = alphaDict)
+findDict(word="displacement", dictName = dispDict)
+findDict(word="normal", dictName=normalDict)
+findDict(word= "metallic", dictName=metallicDict)
+findDict(word="roughness", dictName=roughnessDict)
+findDict(word="emission", dictName=emissionDict)
+
+print(metallicKeywordDict)
+createCatalogName()
+drawPbrSphere()                     
 markAsset()
 
-bpy.app.timers.register(saveAndQuit, first_interval = 15)
-#                
-#        
-#              
-#        
+#bpy.app.timers.register(saveAndQuit, first_interval = 15)
 
 
